@@ -1,6 +1,18 @@
 ﻿namespace Snake.Core;
 
-public class Board()
+public class Board
 {
-    private bool[,] board = new bool[16, 16];
+    public enum Cell
+    {
+        Empty,
+        Snake,
+        Apple,
+    }
+
+    private readonly Cell[,] board = new Cell[16, 16];
+
+    public Cell[,]? GetBoard()
+    {
+        return board.Clone() as Cell[,];
+    }
 }

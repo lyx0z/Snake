@@ -1,6 +1,13 @@
 ﻿namespace Snake.Core;
 
-public static class Game
+public class Game(IBoardPrinter boardPrinter)
 {
-    public static void Start() { }
+    public void Start()
+    {
+        var boardClass = new Board();
+        while (true)
+        {
+            boardPrinter.Print(boardClass.GetBoard());
+        }
+    }
 }

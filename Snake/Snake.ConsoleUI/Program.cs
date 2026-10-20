@@ -2,10 +2,11 @@
 
 using Core;
 
-public class Program
+public static class Program
 {
     public static void Main()
     {
-        Game.Start();
+        var game = new Game(new ConsolePrint());
+        game.Start();
     }
 }
