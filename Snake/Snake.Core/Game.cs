@@ -8,6 +8,7 @@ public class Game(IBoardPrinter boardPrinter)
         while (true)
         {
             boardPrinter.Print(boardClass.GetBoard());
+            Thread.Sleep(500);
         }
     }
 }

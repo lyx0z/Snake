@@ -2,5 +2,5 @@
 
 public interface IBoardPrinter
 {
-    void Print(Board.Cell[,]? board);
+    void Print(Cell[,]? board);
 }

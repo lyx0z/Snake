@@ -4,10 +4,14 @@ namespace Snake.ConsoleUI;
 
 public class ConsolePrint : IBoardPrinter
 {
-    public void Print(Board.Cell[,]? board)
+    public void Print(Cell[,]? board)
     {
         if (board is null)
+        {
             return;
+        }
+
+        Console.Clear();
 
         for (var row = 0; row < board.GetLength(0); row++)
         {
@@ -18,22 +22,14 @@ public class ConsolePrint : IBoardPrinter
             }
             Console.WriteLine();
         }
-        Thread.Sleep(500);
-        Console.Clear();
         Console.ResetColor();
     }
 
-    private static ConsoleColor ChooseColor(Board.Cell cell)
-    {
-        switch (cell)
+    private static ConsoleColor ChooseColor(Cell cell) =>
+        cell switch
         {
-            case Board.Cell.Snake:
-                return ConsoleColor.Green;
-            case Board.Cell.Apple:
-                return ConsoleColor.Red;
-            case Board.Cell.Empty:
-            default:
-                return ConsoleColor.White;
-        }
-    }
+            Cell.Snake => ConsoleColor.Green,
+            Cell.Apple => ConsoleColor.Red,
+            _ => ConsoleColor.White,
+        };
 }
