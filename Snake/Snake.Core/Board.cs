@@ -8,4 +8,9 @@ public class Board
     {
         return (Cell[,])board.Clone();
     }
+
+    public void SetCell(int row, int col, Cell value)
+    {
+        board[row, col] = value;
+    }
 }

@@ -12,7 +12,8 @@ public class ConsolePrint : IBoardPrinter
         {
             for (var col = 0; col < board.GetLength(1); col++)
             {
-                Console.ForegroundColor = ChooseColor(board[row, col]);
+                var consoleColor = ChooseColor(board[row, col]);
+                Console.ForegroundColor = consoleColor;
                 Console.Write(" ■ ");
             }
             Console.WriteLine();
@@ -23,7 +24,7 @@ public class ConsolePrint : IBoardPrinter
     private static ConsoleColor ChooseColor(Cell cell) =>
         cell switch
         {
-            Cell.Snake => ConsoleColor.Green,
+            Cell.Snake => ConsoleColor.DarkGreen,
             Cell.Apple => ConsoleColor.Red,
             Cell.Empty => ConsoleColor.White,
             _ => throw new ArgumentOutOfRangeException(nameof(cell), cell, null),
