@@ -6,7 +6,6 @@ public class Board
 
     public Cell[,] GetBoard()
     {
-        var boardDuplicate = (Cell[,])board.Clone();
-        return boardDuplicate;
+        return (Cell[,])board.Clone();
     }
 }

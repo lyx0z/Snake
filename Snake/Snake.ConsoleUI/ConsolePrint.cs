@@ -4,13 +4,8 @@ namespace Snake.ConsoleUI;
 
 public class ConsolePrint : IBoardPrinter
 {
-    public void Print(Cell[,]? board)
+    public void Print(Cell[,] board)
     {
-        if (board is null)
-        {
-            return;
-        }
-
         Console.Clear();
 
         for (var row = 0; row < board.GetLength(0); row++)
