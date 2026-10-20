@@ -30,6 +30,7 @@ public class ConsolePrint : IBoardPrinter
         {
             Cell.Snake => ConsoleColor.Green,
             Cell.Apple => ConsoleColor.Red,
-            _ => ConsoleColor.White,
+            Cell.Empty => ConsoleColor.White,
+            _ => throw new ArgumentOutOfRangeException(nameof(cell), cell, null),
         };
 }
