@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Snake.ConsoleUI/Snake.ConsoleUI.csproj" />
+  <Project Path="Snake.Core/Snake.Core.csproj" />
+</Solution>
