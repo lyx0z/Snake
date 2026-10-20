@@ -9,8 +9,11 @@ public class Board
         return (Cell[,])board.Clone();
     }
 
-    public void SetCell(int row, int col, Cell value)
+    public void SetCell(IReadOnlyList<Position> positions)
     {
-        board[row, col] = value;
+        foreach (var position in positions)
+        {
+            board[position.Row, position.Col] = Cell.Snake;
+        }
     }
 }

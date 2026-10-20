@@ -6,7 +6,7 @@ public class Game(IBoardPrinter boardPrinter)
     {
         var boardClass = new Board();
         var snake = new Snake();
-        snake.SpawnSnake(boardClass);
+        boardClass.SetCell(snake.GetPositions());
         while (true)
         {
             boardPrinter.Print(boardClass.GetBoard());

@@ -2,11 +2,18 @@
 
 public class Snake
 {
-    public void SpawnSnake(Board board)
+    private readonly List<Position> positions = [];
+
+    public Snake()
     {
         for (var col = 5; col <= 9; col++)
         {
-            board.SetCell(7, col, Cell.Snake);
+            positions.Add(new Position(6, col));
         }
+    }
+
+    public IReadOnlyList<Position> GetPositions()
+    {
+        return positions;
     }
 }
