@@ -6,11 +6,14 @@ public class Game(IBoardPrinter boardPrinter)
     {
         var boardClass = new Board();
         var snake = new Snake();
-        boardClass.SetCell(snake.GetPositions());
+        var rules = new Rules();
+        boardClass.SetSnake(snake.GetPositions());
         while (true)
         {
             boardPrinter.Print(boardClass.GetBoard());
-            Thread.Sleep(500);
+            boardClass.ClearSnake();
+            snake.MoveDirection(rules.MoveTo(Console.ReadKey().Key));
+            boardClass.SetSnake(snake.GetPositions());
         }
     }
 }
