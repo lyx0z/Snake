@@ -2,18 +2,24 @@
 
 public class Game(IBoardPrinter boardPrinter)
 {
+    private Direction direction = Direction.Right;
     public void Start()
     {
         var boardClass = new Board();
         var snake = new Snake();
-        var rules = new Rules();
         boardClass.SetSnake(snake.GetPositions());
         while (true)
         {
-            boardPrinter.Print(boardClass.GetBoard());
+            if (Console.KeyAvailable)
+            {
+                direction = Rules.MoveTo(Console.ReadKey(true).Key, direction);
+            }
             boardClass.ClearSnake();
-            snake.MoveDirection(rules.MoveTo(Console.ReadKey().Key));
+            snake.MoveDirection(direction);
+            
             boardClass.SetSnake(snake.GetPositions());
+            boardPrinter.Print(boardClass.GetBoard());
+            Thread.Sleep(800);
         }
     }
 }

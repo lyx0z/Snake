@@ -2,17 +2,12 @@
 
 public class Rules
 {
-    public Direction MoveTo(ConsoleKey key)
+    public static Direction MoveTo(ConsoleKey key, Direction currentDirection) => key switch
     {
-        var direction = key switch
-        {
-            ConsoleKey.W => Direction.Up,
-            ConsoleKey.D => Direction.Right,
-            ConsoleKey.S => Direction.Down,
-            ConsoleKey.A => Direction.Left,
-            _ => Direction.Right,
-        };
-
-        return direction;
-    }
+        ConsoleKey.W or ConsoleKey.UpArrow => Direction.Up,
+        ConsoleKey.D or ConsoleKey.RightArrow => Direction.Right,
+        ConsoleKey.S or ConsoleKey.DownArrow => Direction.Down,
+        ConsoleKey.A or ConsoleKey.LeftArrow => Direction.Left,
+        _ => currentDirection,
+    };
 }
