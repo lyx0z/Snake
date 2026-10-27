@@ -18,7 +18,7 @@ public class Snake
         return [.. body, head];
     }
 
-    public Direction MoveDirection(Direction currentDirection)
+    public void MoveDirection(Direction currentDirection)
     {
         body.Add(head);
         head = currentDirection switch
@@ -34,7 +34,5 @@ public class Snake
             ),
         };
         body.RemoveAt(0);
-
-        return currentDirection;
     }
 }
