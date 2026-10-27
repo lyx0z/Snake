@@ -2,7 +2,7 @@
 
 public class Snake
 {
-    private Position head = new Position(6, 9);
+    private Position head = new(6, 9);
     private List<Position> body = [];
 
     public Snake()

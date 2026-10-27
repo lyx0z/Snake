@@ -43,7 +43,8 @@ ScaffoldingReadMe.txt
 ~$*
 *~
 CodeCoverage/
-
+.idea/
+.Snake.sln.DotSettings.user/
 # MSBuild Binary and Structured Log
 *.binlog
 

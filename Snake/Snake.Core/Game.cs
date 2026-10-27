@@ -1,8 +1,9 @@
 ﻿namespace Snake.Core;
 
-public class Game(IBoardPrinter boardPrinter)
+public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
 {
     private Direction direction = Direction.Right;
+
     public void Start()
     {
         var boardClass = new Board();
@@ -10,13 +11,10 @@ public class Game(IBoardPrinter boardPrinter)
         boardClass.SetSnake(snake.GetPositions());
         while (true)
         {
-            if (Console.KeyAvailable)
-            {
-                direction = Rules.MoveTo(Console.ReadKey(true).Key, direction);
-            }
+            direction = inputReader.ReadDirection(direction);
             boardClass.ClearSnake();
             snake.MoveDirection(direction);
-            
+
             boardClass.SetSnake(snake.GetPositions());
             boardPrinter.Print(boardClass.GetBoard());
             Thread.Sleep(800);
