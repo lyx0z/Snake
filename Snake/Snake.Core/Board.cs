@@ -17,13 +17,22 @@ public class Board
         }
     }
 
+    public void SpawnApple()
+    {
+        var validPosition = Rules.PickRandomCell(board);
+        board[validPosition.Row, validPosition.Col] = Cell.Apple;
+    }
+
     public void ClearSnake()
     {
         for (var row = 0; row < board.GetLength(0); row++)
         {
             for (var col = 0; col < board.GetLength(1); col++)
             {
-                board[row, col] = Cell.Empty;
+                if (board[row, col] == Cell.Snake)
+                {
+                    board[row, col] = Cell.Empty;
+                }
             }
         }
     }

@@ -2,30 +2,15 @@
 
 public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
 {
-    private Direction direction = Direction.Right;
-    private bool isAppleOnBoard;
-
     public void Start()
     {
         var boardClass = new Board();
-        var snake = new Snake();
-        var board = boardClass.GetBoard();
-        boardClass.SetSnake(snake.GetPositions());
+        var snake = new Snake(inputReader);
+        boardClass.SpawnApple();
         while (true)
         {
-            direction = inputReader.ReadDirection(direction);
-            boardClass.ClearSnake();
-            snake.MoveDirection(direction);
-            boardClass.SetSnake(snake.GetPositions());
-            foreach (var cell in board)
-            {
-                if (cell == Cell.Apple)
-                {
-                    isAppleOnBoard = true;
-                }
-            }
-            board = Rules.SpawnFood(boardClass, isAppleOnBoard);
-            boardPrinter.Print(board);
+            snake.UpdateSnake(boardClass, snake);
+            boardPrinter.Print(boardClass.GetBoard());
             Thread.Sleep(800);
         }
     }

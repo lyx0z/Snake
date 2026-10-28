@@ -2,37 +2,32 @@
 
 public static class Rules
 {
-    private static int row = 5;
-    private static int col = 5;
+    private static int row;
+    private static int col;
+    private static List<Position> ValidPositions = [];
 
-    public static Cell[,] SpawnFood(Board boardClass, bool isAppleOnBoard)
+    public static List<Position> FindValidPos(Cell[,] board)
     {
-        var board = boardClass.GetBoard();
-
-        if (!isAppleOnBoard)
+        for (row = 0; row < board.GetLength(0); row++)
         {
-            PickRandomCell(board);
-            if (board[row, col] == Cell.Snake)
+            for (col = 0; col < board.GetLength(1); col++)
             {
-                if (col + 1 >= board.GetLength(1))
+                if (board[row, col] != Cell.Snake)
                 {
-                    col = 0;
-                }
-                else
-                {
-                    col++;
+                    var validPos = new Position(row, col);
+                    ValidPositions.Add(validPos);
                 }
             }
         }
 
-        board[row, col] = Cell.Apple;
-        return board;
+        return ValidPositions;
     }
-    
-    private static void PickRandomCell(Cell[,] board)
+
+    public static Position PickRandomCell(Cell[,] board)
     {
+        ValidPositions = FindValidPos(board);
         var rnd = new Random();
-        row = rnd.Next(board.GetLength(0));
-        col = rnd.Next(board.GetLength(1));
+        var validPosition = ValidPositions[rnd.Next(0, ValidPositions.Count)];
+        return validPosition;
     }
 }
