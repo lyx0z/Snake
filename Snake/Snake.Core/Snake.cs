@@ -1,24 +1,17 @@
 ﻿namespace Snake.Core;
 
-public class Snake
+public class Snake(IInputReader inputReader)
 {
-    private Position head = new(6, 9);
-    private List<Position> body = [];
-
-    public Snake()
-    {
-        for (var col = 5; col < 9; col++)
-        {
-            body.Add(new Position(6, col));
-        }
-    }
+    private Direction direction = Direction.Right;
+    private Position head = new(6, 7);
+    private List<Position> body = [new(6, 5), new(6, 6)];
 
     public IReadOnlyList<Position> GetPositions()
     {
         return [.. body, head];
     }
 
-    public void MoveDirection(Direction currentDirection)
+    private void MoveDirection(Direction currentDirection)
     {
         body.Add(head);
         head = currentDirection switch
@@ -34,5 +27,13 @@ public class Snake
             ),
         };
         body.RemoveAt(0);
+    }
+
+    public void UpdateSnake(Board boardClass, Snake snake)
+    {
+        direction = inputReader.ReadDirection(direction);
+        boardClass.ClearSnake();
+        snake.MoveDirection(direction);
+        boardClass.SetSnake(snake.GetPositions());
     }
 }
