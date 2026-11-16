@@ -4,9 +4,15 @@ using Core;
 
 public static class Program
 {
+    private static Game game = new(new ConsolePrint(), new InputReader());
+
     public static void Main()
     {
-        var game = new Game(new ConsolePrint(), new InputReader());
         game.Start();
+    }
+
+    public static Game GetGame()
+    {
+        return game;
     }
 }
