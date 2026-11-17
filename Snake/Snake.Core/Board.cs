@@ -2,7 +2,6 @@
 
 public class Board
 {
-    private static List<Position> validPositions = [];
     private readonly Cell[,] board = new Cell[16, 16];
 
     public Cell[,] GetBoard()
@@ -20,6 +19,7 @@ public class Board
 
     private List<Position> FindValidPos()
     {
+        var validPositions = new List<Position>();
         for (var row = 0; row < board.GetLength(0); row++)
         {
             for (var col = 0; col < board.GetLength(1); col++)
@@ -31,13 +31,12 @@ public class Board
                 }
             }
         }
-
         return validPositions;
     }
 
     private Position PickRandomCell()
     {
-        validPositions = FindValidPos();
+        var validPositions = FindValidPos();
         var rnd = new Random();
         var validPosition = validPositions[rnd.Next(0, validPositions.Count)];
         return validPosition;

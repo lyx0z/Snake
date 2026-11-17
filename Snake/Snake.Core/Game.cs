@@ -2,28 +2,50 @@
 
 public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
 {
-    public static Direction direction = Direction.Right;
+    private Direction direction = Direction.Right;
+    private bool running = true;
 
     public void Start()
     {
-        var boardClass = new Board();
+        var board = new Board();
         var snake = new Snake();
-        boardClass.SpawnApple();
-        while (true)
+        running = true;
+        direction = Direction.Right;
+        board.SpawnApple();
+
+        while (running)
         {
             direction = inputReader.ReadDirection(direction);
-            Thread.Sleep(400);
-            if (boardClass.IsOutOfBounds(snake.GetNextHead(direction)) || snake.IsEatingSelf())
+            var nextHead = snake.GetNextHead(direction);
+
+            if (board.IsOutOfBounds(nextHead) || snake.IsEatingSelf(nextHead))
             {
-                boardPrinter.TriggerGameOver();
-                boardClass.ClearSnake();
-                Thread.Sleep(3000);
-                Start();
+                board.ClearSnake();
+                GameOver();
+                continue;
             }
-            boardClass.ClearSnake();
-            snake.SpawnNewAppleAfterEating(boardClass, snake);
-            snake.UpdateSnake(boardClass, snake);
-            boardPrinter.Print(boardClass.GetBoard());
+
+            if (snake.IsEating(nextHead, board.GetBoard()))
+            {
+                snake.Grow();
+                board.SpawnApple();
+            }
+
+            snake.MoveTo(nextHead);
+            board.ClearSnake();
+            board.SetSnake(snake.GetPositions());
+            boardPrinter.Print(board.GetBoard());
+            Thread.Sleep(400);
+        }
+    }
+
+    private void GameOver()
+    {
+        running = false;
+        boardPrinter.PrintGameOver();
+        if (inputReader.ReadKeyGameOver())
+        {
+            Start();
         }
     }
 }

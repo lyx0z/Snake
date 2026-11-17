@@ -30,7 +30,7 @@ public class ConsolePrint : IBoardPrinter
             _ => throw new ArgumentOutOfRangeException(nameof(cell), cell, null),
         };
 
-    public void TriggerGameOver()
+    public void PrintGameOver()
     {
         Console.CursorVisible = false;
         var gameOverText = """
@@ -51,5 +51,6 @@ public class ConsolePrint : IBoardPrinter
             Thread.Sleep(200);
         }
         Console.WriteLine(gameOverText);
+        Console.WriteLine("Press SPACE to continue");
     }
 }

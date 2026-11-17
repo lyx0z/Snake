@@ -11,6 +11,15 @@ public class InputReader : IInputReader
             : GetDirection(Console.ReadKey(true).Key, currentDirection);
     }
 
+    public bool ReadKeyGameOver()
+    {
+        while (Console.KeyAvailable)
+        {
+            Console.ReadKey(true);
+        }
+        return Console.ReadKey(true).Key == ConsoleKey.Spacebar;
+    }
+
     private static Direction GetDirection(ConsoleKey key, Direction current) =>
         key switch
         {

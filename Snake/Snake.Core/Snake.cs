@@ -4,8 +4,9 @@ public class Snake
 {
     private Position head = new(6, 7);
     private List<Position> body = [new(6, 5), new(6, 6)];
+    private bool shouldGrow;
 
-    private IReadOnlyList<Position> GetPositions()
+    public IReadOnlyList<Position> GetPositions()
     {
         return [.. body, head];
     }
@@ -22,43 +23,35 @@ public class Snake
         };
     }
 
-    private void MoveTo(Position nextHead, bool didEat)
+    public void MoveTo(Position nextHead)
     {
         body.Add(head);
         head = nextHead;
-        if (!didEat)
+
+        if (shouldGrow)
+        {
+            shouldGrow = false;
+        }
+        else
         {
             body.RemoveAt(0);
         }
     }
 
-    public void UpdateSnake(Board boardClass, Snake snake)
+    public void Grow()
     {
-        MoveTo(
-            GetNextHead(Game.direction),
-            IsEating(snake.GetNextHead(Game.direction), boardClass.GetBoard())
-        );
-        boardClass.SetSnake(snake.GetPositions());
+        shouldGrow = true;
     }
 
-    public void SpawnNewAppleAfterEating(Board boardClass, Snake snake)
+    public bool IsEatingSelf(Position nextHead)
     {
-        if (IsEating(snake.GetNextHead(Game.direction), boardClass.GetBoard()))
-        {
-            boardClass.SpawnApple();
-        }
+        return body.Contains(nextHead);
     }
 
-    public bool IsEatingSelf()
-    {
-        return body.Contains(GetNextHead(Game.direction));
-    }
-
-    private static bool IsEating(Position nextHead, Cell[,] board)
+    public bool IsEating(Position nextHead, Cell[,] board)
     {
         if (board[nextHead.Row, nextHead.Col] == Cell.Apple)
         {
-            board[nextHead.Row, nextHead.Col] = Cell.Snake;
             return true;
         }
 
