@@ -7,11 +7,10 @@ public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
 
     public void Start()
     {
-        var board = new Board();
         var snake = new Snake();
+        var board = new Board(snake.GetPositions());
+
         running = true;
-        direction = Direction.Right;
-        board.SpawnApple();
 
         while (running)
         {
@@ -20,21 +19,18 @@ public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
 
             if (board.IsOutOfBounds(nextHead) || snake.IsEatingSelf(nextHead))
             {
-                board.ClearSnake();
                 GameOver();
                 continue;
             }
 
-            if (snake.IsEating(nextHead, board.GetBoard()))
+            if (Snake.IsEating(nextHead, board.applePosition))
             {
                 snake.Grow();
-                board.SpawnApple();
+                board.SpawnApple(snake.GetPositions());
             }
 
             snake.MoveTo(nextHead);
-            board.ClearSnake();
-            board.SetSnake(snake.GetPositions());
-            boardPrinter.Print(board.GetBoard());
+            boardPrinter.Print(board.GenerateNextFrame(snake.GetPositions()));
             Thread.Sleep(400);
         }
     }
@@ -45,6 +41,7 @@ public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
         boardPrinter.PrintGameOver();
         if (inputReader.ReadKeyGameOver())
         {
+            direction = Direction.Right;
             Start();
         }
     }

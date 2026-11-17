@@ -48,13 +48,8 @@ public class Snake
         return body.Contains(nextHead);
     }
 
-    public bool IsEating(Position nextHead, Cell[,] board)
+    public static bool IsEating(Position nextHead, Position apple)
     {
-        if (board[nextHead.Row, nextHead.Col] == Cell.Apple)
-        {
-            return true;
-        }
-
-        return false;
+        return nextHead == apple;
     }
 }

@@ -13,10 +13,6 @@ public class InputReader : IInputReader
 
     public bool ReadKeyGameOver()
     {
-        while (Console.KeyAvailable)
-        {
-            Console.ReadKey(true);
-        }
         return Console.ReadKey(true).Key == ConsoleKey.Spacebar;
     }
 
