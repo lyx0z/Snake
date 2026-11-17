@@ -6,19 +6,21 @@ public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
 
     public void Start()
     {
+        Console.CursorVisible = false;
         var boardClass = new Board();
         var snake = new Snake(inputReader);
         boardClass.SpawnApple();
         while (isRunning)
         {
-            snake.UpdateSnake(boardClass, snake);
-            boardPrinter.Print(boardClass.GetBoard());
-            Thread.Sleep(800);
-            if (Rules.IsOutOfBounds(snake.GetNextHead(), boardClass.GetBoard()))
+            Thread.Sleep(400);
+            if (Board.IsOutOfBounds(snake.GetNextHead(), boardClass.GetBoard()))
             {
                 boardPrinter.TriggerGameOver();
-                isRunning = false;
+                Thread.Sleep(3000);
+                Start();
             }
+            snake.UpdateSnake(boardClass, snake);
+            boardPrinter.Print(boardClass.GetBoard());
         }
     }
 }

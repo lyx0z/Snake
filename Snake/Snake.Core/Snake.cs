@@ -41,7 +41,11 @@ public class Snake(IInputReader inputReader)
 
         boardClass.ClearSnake();
 
-        var didEat = Rules.EatAndSpawnApple(snake.GetNextHead(), boardClass, boardClass.GetBoard());
+        var didEat = Apples.Eat(snake.GetNextHead(), boardClass.GetBoard());
+        if (didEat)
+        {
+            boardClass.SpawnApple();
+        }
         MoveTo(nextHead, didEat);
         boardClass.SetSnake(snake.GetPositions());
     }

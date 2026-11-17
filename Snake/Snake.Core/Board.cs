@@ -62,4 +62,12 @@ public class Board
             }
         }
     }
+
+    public static bool IsOutOfBounds(Position nextHead, Cell[,] board)
+    {
+        var isRowInside = nextHead.Row >= 0 && nextHead.Row < board.GetLength(0);
+        var isColInside = nextHead.Col >= 0 && nextHead.Col < board.GetLength(1);
+
+        return !isRowInside || !isColInside;
+    }
 }
