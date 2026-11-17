@@ -21,7 +21,7 @@ public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
                 Start();
             }
             boardClass.ClearSnake();
-            snake.CheckIfEatingAndSpawnApple(boardClass, snake);
+            snake.SpawnNewAppleAfterEating(boardClass, snake);
             snake.UpdateSnake(boardClass, snake);
             boardPrinter.Print(boardClass.GetBoard());
         }

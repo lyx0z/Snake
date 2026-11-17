@@ -36,14 +36,14 @@ public class Snake
     {
         MoveTo(
             GetNextHead(Game.direction),
-            Eat(snake.GetNextHead(Game.direction), boardClass.GetBoard())
+            IsEating(snake.GetNextHead(Game.direction), boardClass.GetBoard())
         );
         boardClass.SetSnake(snake.GetPositions());
     }
 
-    public void CheckIfEatingAndSpawnApple(Board boardClass, Snake snake)
+    public void SpawnNewAppleAfterEating(Board boardClass, Snake snake)
     {
-        if (Eat(snake.GetNextHead(Game.direction), boardClass.GetBoard()))
+        if (IsEating(snake.GetNextHead(Game.direction), boardClass.GetBoard()))
         {
             boardClass.SpawnApple();
         }
@@ -54,7 +54,7 @@ public class Snake
         return body.Contains(GetNextHead(Game.direction));
     }
 
-    public static bool Eat(Position nextHead, Cell[,] board)
+    private static bool IsEating(Position nextHead, Cell[,] board)
     {
         if (board[nextHead.Row, nextHead.Col] == Cell.Apple)
         {
