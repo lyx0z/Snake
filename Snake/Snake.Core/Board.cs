@@ -63,7 +63,7 @@ public class Board
         }
     }
 
-    public static bool IsOutOfBounds(Position nextHead, Cell[,] board)
+    public bool IsOutOfBounds(Position nextHead)
     {
         var isRowInside = nextHead.Row >= 0 && nextHead.Row < board.GetLength(0);
         var isColInside = nextHead.Col >= 0 && nextHead.Col < board.GetLength(1);

@@ -14,15 +14,14 @@ public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
         {
             direction = inputReader.ReadDirection(direction);
             Thread.Sleep(400);
-            if (
-                Board.IsOutOfBounds(snake.GetNextHead(direction), boardClass.GetBoard())
-                || snake.IsEatingSelf()
-            )
+            if (boardClass.IsOutOfBounds(snake.GetNextHead(direction)) || snake.IsEatingSelf())
             {
                 boardPrinter.TriggerGameOver();
                 Thread.Sleep(3000);
                 Start();
             }
+            boardClass.ClearSnake();
+            snake.CheckIfEatingAndSpawnApple(boardClass, snake);
             snake.UpdateSnake(boardClass, snake);
             boardPrinter.Print(boardClass.GetBoard());
         }

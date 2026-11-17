@@ -8,10 +8,10 @@ public class InputReader : IInputReader
     {
         return !Console.KeyAvailable
             ? currentDirection
-            : MoveTo(Console.ReadKey(true).Key, currentDirection);
+            : GetDirection(Console.ReadKey(true).Key, currentDirection);
     }
 
-    private static Direction MoveTo(ConsoleKey key, Direction current) =>
+    private static Direction GetDirection(ConsoleKey key, Direction current) =>
         key switch
         {
             ConsoleKey.W or ConsoleKey.UpArrow when current != Direction.Down => Direction.Up,

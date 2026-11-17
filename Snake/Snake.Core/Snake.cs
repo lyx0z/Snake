@@ -34,21 +34,34 @@ public class Snake
 
     public void UpdateSnake(Board boardClass, Snake snake)
     {
-        var nextHead = GetNextHead(Game.direction);
+        MoveTo(
+            GetNextHead(Game.direction),
+            Eat(snake.GetNextHead(Game.direction), boardClass.GetBoard())
+        );
+        boardClass.SetSnake(snake.GetPositions());
+    }
 
-        boardClass.ClearSnake();
-
-        var didEat = Apples.Eat(snake.GetNextHead(Game.direction), boardClass.GetBoard());
-        if (didEat)
+    public void CheckIfEatingAndSpawnApple(Board boardClass, Snake snake)
+    {
+        if (Eat(snake.GetNextHead(Game.direction), boardClass.GetBoard()))
         {
             boardClass.SpawnApple();
         }
-        MoveTo(nextHead, didEat);
-        boardClass.SetSnake(snake.GetPositions());
     }
 
     public bool IsEatingSelf()
     {
         return body.Contains(GetNextHead(Game.direction));
+    }
+
+    public static bool Eat(Position nextHead, Cell[,] board)
+    {
+        if (board[nextHead.Row, nextHead.Col] == Cell.Apple)
+        {
+            board[nextHead.Row, nextHead.Col] = Cell.Snake;
+            return true;
+        }
+
+        return false;
     }
 }
