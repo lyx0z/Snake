@@ -32,6 +32,7 @@ public class ConsolePrint : IBoardPrinter
 
     public void TriggerGameOver()
     {
+        Console.CursorVisible = false;
         var gameOverText = """
               ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗ 
              ██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗

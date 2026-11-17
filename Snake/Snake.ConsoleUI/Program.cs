@@ -10,9 +10,4 @@ public static class Program
     {
         game.Start();
     }
-
-    public static Game GetGame()
-    {
-        return game;
-    }
 }

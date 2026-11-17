@@ -1,8 +1,7 @@
 ﻿namespace Snake.Core;
 
-public class Snake(IInputReader inputReader)
+public class Snake
 {
-    private Direction direction = Direction.Right;
     private Position head = new(6, 7);
     private List<Position> body = [new(6, 5), new(6, 6)];
 
@@ -11,7 +10,7 @@ public class Snake(IInputReader inputReader)
         return [.. body, head];
     }
 
-    public Position GetNextHead()
+    public Position GetNextHead(Direction direction)
     {
         return direction switch
         {
@@ -35,18 +34,21 @@ public class Snake(IInputReader inputReader)
 
     public void UpdateSnake(Board boardClass, Snake snake)
     {
-        direction = inputReader.ReadDirection(direction);
-
-        var nextHead = GetNextHead();
+        var nextHead = GetNextHead(Game.direction);
 
         boardClass.ClearSnake();
 
-        var didEat = Apples.Eat(snake.GetNextHead(), boardClass.GetBoard());
+        var didEat = Apples.Eat(snake.GetNextHead(Game.direction), boardClass.GetBoard());
         if (didEat)
         {
             boardClass.SpawnApple();
         }
         MoveTo(nextHead, didEat);
         boardClass.SetSnake(snake.GetPositions());
+    }
+
+    public bool IsEatingSelf()
+    {
+        return body.Contains(GetNextHead(Game.direction));
     }
 }

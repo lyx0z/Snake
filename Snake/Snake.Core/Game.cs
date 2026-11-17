@@ -2,18 +2,22 @@
 
 public class Game(IBoardPrinter boardPrinter, IInputReader inputReader)
 {
+    public static Direction direction = Direction.Right;
     private bool isRunning = true;
 
     public void Start()
     {
-        Console.CursorVisible = false;
         var boardClass = new Board();
-        var snake = new Snake(inputReader);
+        var snake = new Snake();
         boardClass.SpawnApple();
         while (isRunning)
         {
+            direction = inputReader.ReadDirection(direction);
             Thread.Sleep(400);
-            if (Board.IsOutOfBounds(snake.GetNextHead(), boardClass.GetBoard()))
+            if (
+                Board.IsOutOfBounds(snake.GetNextHead(direction), boardClass.GetBoard())
+                || snake.IsEatingSelf()
+            )
             {
                 boardPrinter.TriggerGameOver();
                 Thread.Sleep(3000);

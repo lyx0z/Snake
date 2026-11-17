@@ -2,7 +2,7 @@
 
 public class Board
 {
-    private static List<Position> ValidPositions = [];
+    private static List<Position> validPositions = [];
     private readonly Cell[,] board = new Cell[16, 16];
 
     public Cell[,] GetBoard()
@@ -27,19 +27,19 @@ public class Board
                 if (board[row, col] != Cell.Snake)
                 {
                     var validPos = new Position(row, col);
-                    ValidPositions.Add(validPos);
+                    validPositions.Add(validPos);
                 }
             }
         }
 
-        return ValidPositions;
+        return validPositions;
     }
 
     private Position PickRandomCell()
     {
-        ValidPositions = FindValidPos();
+        validPositions = FindValidPos();
         var rnd = new Random();
-        var validPosition = ValidPositions[rnd.Next(0, ValidPositions.Count)];
+        var validPosition = validPositions[rnd.Next(0, validPositions.Count)];
         return validPosition;
     }
 
