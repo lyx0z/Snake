@@ -2,64 +2,60 @@
 
 public class Board
 {
-    private static List<Position> ValidPositions = [];
     private readonly Cell[,] board = new Cell[16, 16];
+    private readonly Random random = new();
+    public Position applePosition { get; private set; }
 
-    public Cell[,] GetBoard()
+    public Board(IReadOnlyList<Position> snake)
     {
-        return (Cell[,])board.Clone();
+        SpawnApple(snake);
     }
 
-    public void SetSnake(IReadOnlyList<Position> positions)
+    private List<Position> FindValidPos(IReadOnlyList<Position> snake)
     {
-        foreach (var position in positions)
-        {
-            board[position.Row, position.Col] = Cell.Snake;
-        }
-    }
-
-    private List<Position> FindValidPos()
-    {
+        var validPositions = new List<Position>();
         for (var row = 0; row < board.GetLength(0); row++)
         {
             for (var col = 0; col < board.GetLength(1); col++)
             {
-                if (board[row, col] != Cell.Snake)
+                var position = new Position(row, col);
+                if (!snake.Contains(position))
                 {
-                    var validPos = new Position(row, col);
-                    ValidPositions.Add(validPos);
+                    validPositions.Add(position);
                 }
             }
         }
-
-        return ValidPositions;
+        return validPositions;
     }
 
-    private Position PickRandomCell()
+    private Position PickRandomCell(IReadOnlyList<Position> snake)
     {
-        ValidPositions = FindValidPos();
-        var rnd = new Random();
-        var validPosition = ValidPositions[rnd.Next(0, ValidPositions.Count)];
-        return validPosition;
+        var validPositions = FindValidPos(snake);
+        return validPositions[random.Next(0, validPositions.Count)];
     }
 
-    public void SpawnApple()
+    public void SpawnApple(IReadOnlyList<Position> snake)
     {
-        var validPosition = PickRandomCell();
-        board[validPosition.Row, validPosition.Col] = Cell.Apple;
+        applePosition = PickRandomCell(snake);
     }
 
-    public void ClearSnake()
+    public bool IsOutOfBounds(Position nextHead)
     {
-        for (var row = 0; row < board.GetLength(0); row++)
+        var isRowInside = nextHead.Row >= 0 && nextHead.Row < board.GetLength(0);
+        var isColInside = nextHead.Col >= 0 && nextHead.Col < board.GetLength(1);
+
+        return !isRowInside || !isColInside;
+    }
+
+    public Cell[,] GenerateNextFrame(IReadOnlyList<Position> snake)
+    {
+        var nextBoard = new Cell[16, 16];
+        nextBoard[applePosition.Row, applePosition.Col] = Cell.Apple;
+        foreach (var part in snake)
         {
-            for (var col = 0; col < board.GetLength(1); col++)
-            {
-                if (board[row, col] == Cell.Snake)
-                {
-                    board[row, col] = Cell.Empty;
-                }
-            }
+            nextBoard[part.Row, part.Col] = Cell.Snake;
         }
+
+        return nextBoard;
     }
 }

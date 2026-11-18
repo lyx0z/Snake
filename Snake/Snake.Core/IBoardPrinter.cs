@@ -3,4 +3,5 @@
 public interface IBoardPrinter
 {
     void Print(Cell[,] board);
+    void PrintGameOver();
 }

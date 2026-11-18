@@ -29,4 +29,28 @@ public class ConsolePrint : IBoardPrinter
             Cell.Empty => ConsoleColor.White,
             _ => throw new ArgumentOutOfRangeException(nameof(cell), cell, null),
         };
+
+    public void PrintGameOver()
+    {
+        Console.CursorVisible = false;
+        var gameOverText = """
+              ██████╗  █████╗ ███╗   ███╗███████╗     ██████╗ ██╗   ██╗███████╗██████╗ 
+             ██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔═══██╗██║   ██║██╔════╝██╔══██╗
+             ██║  ███╗███████║██╔████╔██║█████╗      ██║   ██║██║   ██║█████╗  ██████╔╝
+             ██║   ██║██╔══██║██║╚██╔╝██║██╔══╝      ██║   ██║╚██╗ ██╔╝██╔══╝  ██╔══██╗
+             ╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗    ╚██████╔╝ ╚████╔╝ ███████╗██║  ██║
+              ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝     ╚═════╝   ╚═══╝  ╚══════╝╚═╝  ╚═╝
+            """;
+        for (var i = 0; i < 4; i++)
+        {
+            Console.Clear();
+            Console.WriteLine(gameOverText);
+            Thread.Sleep(400);
+
+            Console.Clear();
+            Thread.Sleep(200);
+        }
+        Console.WriteLine(gameOverText);
+        Console.WriteLine("Press SPACE to continue");
+    }
 }
